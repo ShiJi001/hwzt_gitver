@@ -1,8 +1,11 @@
 import pandas as pd
 import os
 
-#读取txt文件，筛选只在txt文件中存在的数据行
+
 def filter_pairs(csv_file_path, txt_file_path):
+    '''
+    读取txt文件，筛选只在txt文件中存在的数据行
+    '''
     # 读取txt文件并将每一对词语存储在一个集合中
     pairs = set()
     with open(txt_file_path, 'r', encoding='utf-8') as txt_file:
@@ -19,8 +22,11 @@ def filter_pairs(csv_file_path, txt_file_path):
     return filtered_df
 
 
-#过滤关键词库中词频大于等于n的条目并且存储为txt
+
 def filter_keywords(csv_path, n, txt_output_path):
+    '''
+    过滤关键词库中词频大于等于n的条目并且存储为txt
+    '''
 
     data = pd.read_csv(csv_path)
     

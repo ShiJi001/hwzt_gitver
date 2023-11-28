@@ -13,6 +13,9 @@ partial_columns = myconfig.partial_columns
 
 
 def singleSentenceProcess(sentTok, sentPos, sentDep):
+    '''
+    对单个句子进行特定处理。
+    '''
     # 创建一个新的dataframe
     singleSentenceCollocation = pd.DataFrame(columns=partial_columns)
 
@@ -55,6 +58,9 @@ def singleSentenceProcess(sentTok, sentPos, sentDep):
 
 
 def rule_1(singleSentenceCollocation):
+    '''
+    规则1：去除标点符号和root的依存关系。
+    '''
     biaodianTag = "punct"  # 标点符号 tag
     rootTag = "root"
 
@@ -68,6 +74,9 @@ def rule_1(singleSentenceCollocation):
 
 
 def rule_2(singleSentenceCollocation, sentTok, sentDep):
+    '''
+    规则2：对于复合名词，只保留离该组复合名词根节点最近的那一个搭配，注意，当前默认根节点是一组复合名词中最后一个名词。
+    '''
     # 初始化一个空的DataFrame用于存储最终结果
     filtered_collocations = pd.DataFrame(columns=singleSentenceCollocation.columns)
 
@@ -117,6 +126,9 @@ def rule_2(singleSentenceCollocation, sentTok, sentDep):
 
 # pku的代词可能有问题
 def rule_3(singleSentenceCollocation):
+    '''
+    规则3：将人名与数词用占位符@和#替代。
+    '''
     renming_cixing = "nr"  # 人名词性tag
     shuci_cixing = "m"  # 数词词性tag
 
@@ -143,6 +155,9 @@ def rule_3(singleSentenceCollocation):
 
 
 def mergeLibrary(df1, df2):
+    '''
+    合并两个搭配库。
+    '''
     # 情况1：一个dataframe的列是full_columns，另一个是partial_columns
     if (
         set(df1.columns) == set(full_columns)
@@ -245,6 +260,9 @@ def singleSentenceProcess_only_nn(sentTok, sentPos):
 
 
 def readArticle_fromJSP(article):
+    '''
+    对一篇json格式存储的文章进行处理。
+    '''
     tok_tasks = "tok/fine"
     pos_tasks = "pos/pku"
     dep_tasks = "dep"
@@ -280,6 +298,9 @@ def readArticle_fromJSP(article):
 def corpus_process_and_merge(
     corpus_of_Json_folder, collocation_Library_folder, existed_coLibrary
 ):
+    '''
+    对多层文件夹的json形式文章进行处理，注意文件夹层级。
+    '''
     datacolumns = full_columns
 
     # 检查corpus_of_Json_folder是否存在

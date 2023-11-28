@@ -35,6 +35,10 @@ def _replace_with_separator(text, separator, regexs):
 
 
 def custom_split_sentence(text, best=True):
+    '''
+    自定义分句，将指定句子终结符替换为换行符。
+    句子终结符包括([。！!？?,，:：；;]|\s)
+    '''
     # 使用正则表达式替换所有的句子终结符为换行符，包括空格
     text = re.sub(r"([。！!？?,，:：；;]|\s)", r"\n", text)
     # 对于六个连续句点构成的省略号，替换为换行符
@@ -65,6 +69,9 @@ def custom_split_sentence(text, best=True):
 
 
 def readArticle_withHanLP_tok_fine(article, HanLP):
+    '''
+    执行hanlp的任务，得到结果
+    '''
     # 执行的任务标签
     tok_tasks = "tok/fine"
     pos_tasks = "pos/pku"
@@ -84,6 +91,9 @@ def readArticle_withHanLP_tok_fine(article, HanLP):
 
 
 def articleFolder_2jsonFolder(HanLP, articleFolder, jsonFolder):
+    '''
+    将文件夹的的所有文章进行hanlp处理，并存储json文件到相应的文件夹中。
+    '''
     # 检查文章所在的文件夹是否存在
     if not os.path.exists(articleFolder):
         os.makedirs(articleFolder)
@@ -131,6 +141,9 @@ def articleFolder_2jsonFolder(HanLP, articleFolder, jsonFolder):
 
 
 def corpus_2json(HanLP, corpus_folder, corpus_json_folder):
+    '''
+    进行多层文件夹处理过程并使用进度条可视化。注意文件夹的层级。
+    '''
     # 检查corpus_folder是否存在，不存在则报错
     if not os.path.exists(corpus_folder):
         raise FileNotFoundError(f"{corpus_folder} 不存在！")

@@ -72,7 +72,7 @@ def mergeLibrary(df1, df2):
 def corpus_process_and_merge(
     corpus_of_Json_folders, word_Freq_Library_folder, existed_wordFreqLibrary, need_pos
 ):
-    """处理语料库并合并结果"""
+    """处理多层文件夹下的语料库，注意文件夹层级"""
     datacolumns = full_columns  # 这里假设 full_columns 已经被定义
 
     # 尝试读取已有的关键词库，仅在函数开始时执行一次

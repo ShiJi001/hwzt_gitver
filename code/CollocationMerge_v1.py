@@ -25,6 +25,9 @@ def mergeLibrary(df1, df2):
 
 
 def corpus_merge(existed_coLibrary, res_coLibrary):
+    '''
+    合并多个已存在的搭配库。
+    '''
     datacolumns = full_columns
 
     # 检查corpus_of_Json_folder是否存在
