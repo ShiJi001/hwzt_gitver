@@ -344,7 +344,8 @@ def corpus_process_and_merge(
             folder2_Library_to_be_added = pd.DataFrame(columns=full_columns)
 
             # 使用内部进度条处理folder2中的每篇文章
-            hide_pbar3 = True  # 设置变量来控制是否显示pbar3
+            hide_pbar3 = myconfig.hide_pbar3_json2csv  # 设置变量来控制是否显示pbar3
+            
             pbar3 = tqdm(article_list, desc=f"正在处理'{folder2}'中的文章", leave=False, mininterval=60, disable=hide_pbar3)
             for article_file in pbar3:
                 # 检查文件扩展名是否为.json

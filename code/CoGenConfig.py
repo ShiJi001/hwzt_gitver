@@ -31,11 +31,13 @@ resrootname_txt2json = r"/home/xt/workplace/hwzt/code/res4code_231127"
 #资源存放文件夹
 rootname_json2csv = r"/home/xt/workplace/hwzt/code/res4code_231127"
 #语料文件夹名，该文件夹位于上述文件夹目录下
-partname_json2csv = "text_20230901_20231113_json"
+partname_json2csv = "yulu_231128_json"
 #结果存放文件夹，（主要用于存放阶段性生成的临时文件）
 resrootname_json2csv = r"/home/xt/workplace/hwzt/res/res4code_231127"
 #已有搭配库的位置
 existed_colLib_path_json2csv=r""
+#是否隐藏最底层进度条，当数据量大时建议为true
+hide_pbar3_json2csv = True 
 
 #-----------------------------------------------------------------------------------------------------------
 
@@ -59,19 +61,15 @@ existed_colLib_path_json2csv=r""
 #从json中提取关键词库
 
 #资源存放文件夹
-rootname_json2words = r"/home/xt/workplace/hwzt/code/res4code_231105"
+rootname_json2words = r"/home/xt/workplace/hwzt/code/res4code_231127"
 #语料文件夹名，该文件夹位于上述文件夹目录下
 partnames_json2words = [
-    "SplitText20220901-20221031"+"_json",
-    "SplitText20221101-20230131"+"_json",
-    "SplitText20230201-20230531"+"_json",
-    "SplitText20230601-20230906"+"_json",
-    "SplitText20230907-20231113"+"_json"
+    "yulu_231128_json"
 ]
 #本次运行的名字
-partname_json2words="wordsFreq_20231119"
+partname_json2words="yulu_231128_json"
 #结果存放文件夹，（主要用于存放阶段性生成的临时文件）
-resrootname_json2words = r"/home/xt/workplace/hwzt/res/res4code_231105"
+resrootname_json2words = r"/home/xt/workplace/hwzt/res/res4code_231127"
 #已有搭配库的位置
 existed_colLib_path_json2words=r""
 
