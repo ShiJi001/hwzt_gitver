@@ -345,7 +345,7 @@ def corpus_process_and_merge(
 
             # 使用内部进度条处理folder2中的每篇文章
             hide_pbar3 = myconfig.hide_pbar3_json2csv  # 设置变量来控制是否显示pbar3
-            
+
             pbar3 = tqdm(article_list, desc=f"正在处理'{folder2}'中的文章", leave=False, mininterval=60, disable=hide_pbar3)
             for article_file in pbar3:
                 # 检查文件扩展名是否为.json
@@ -418,8 +418,10 @@ def corpus_process_and_merge(
         by="搭配频次", ascending=False
     )
 
+    # 语料文件夹名
+    partname = myconfig.partname_json2csv
     collocationLibrary_new.to_csv(
-        os.path.join(collocation_Library_folder, f"collocationLibrary-{timestamp}.csv"),
+        os.path.join(collocation_Library_folder, f"collocationLibrary_{partname}.csv"),
         index=False,
         encoding="utf-8-sig",
     )
@@ -458,7 +460,10 @@ def main():
     # 时间戳
     timestamp = datetime.now().strftime("%m%d%H%M")
     profiler.disable()
-    profiler.dump_stats(f"performance_analysis_4_json2csv_{partname}_{timestamp}.prof")
+    #是否保存性能分析结果
+    saveTag=myconfig.save_profiler
+    if(saveTag):
+        profiler.dump_stats(f"performance_analysis_4_json2csv_{partname}_{timestamp}.prof")
 
 
 if __name__ == "__main__":

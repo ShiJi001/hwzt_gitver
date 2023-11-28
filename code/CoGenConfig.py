@@ -10,8 +10,11 @@ partial_columns = ["词语1", "词语2", "词语1词性", "词语2词性", "词�
 words_full_columns = ["关键词", "词性", "词频"]
 words_partial_columns = ["关键词", "词性"]
 
+#名词范畴
 noun_pos = {'an', 'n', 'vn'}
 
+#是否保存性能分析结果
+save_profiler=False
 
 #-----------------------------------------------------------------------------------------------------------
 #txt to json
@@ -46,11 +49,11 @@ hide_pbar3_json2csv = True
 #合并搭配库
 
 #资源存放文件夹
-rootname_mergeCoLib = r"/home/xt/workplace/hwzt/code/res4code_231105"
+rootname_mergeCoLib = r"/home/xt/workplace/hwzt/code/res4code_231127"
 #语料文件夹名，该文件夹位于上述文件夹目录下
-partname_mergeCoLib = "to_be_merged_1123"
+partname_mergeCoLib = "to_be_merged_1128_onlynn"
 #结果存放文件夹，（主要用于存放阶段性生成的临时文件）
-resrootname_mergeCoLib = r"/home/xt/workplace/hwzt/res/res4code_231105"
+resrootname_mergeCoLib = r"/home/xt/workplace/hwzt/res/res4code_231127"
 #已有搭配库的位置
 existed_colLib_path_json2csv=r""
 #-----------------------------------------------------------------------------------------------------------

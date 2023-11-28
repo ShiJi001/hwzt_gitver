@@ -234,7 +234,10 @@ def main():
     timestamp = datetime.now().strftime("%m%d%H%M")
     # 性能检测模块后置
     profiler.disable()
-    profiler.dump_stats(f"performance_analysis_4_txt2json_{partname}_{timestamp}.prof")
+    #是否保存性能分析结果
+    saveTag=myconfig.save_profiler
+    if(saveTag):
+        profiler.dump_stats(f"performance_analysis_4_txt2json_{partname}_{timestamp}.prof")
 
 
 if __name__ == "__main__":
