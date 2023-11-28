@@ -183,15 +183,6 @@ def filter_keywords_test(csv_path, txt_path, output_path, n_values, blacklist):
 
 
 
-
-
-        
-
-        
-
-
-
-
 def main():
     csv_path = myconfig.CSV_path_WFLibProcessing
     txt_path = myconfig.txt_path_WFLibProcessing
