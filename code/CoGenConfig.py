@@ -17,11 +17,11 @@ noun_pos = {'an', 'n', 'vn'}
 #txt to json
 
 #资源存放文件夹
-rootname_txt2json = r"/home/xt/workplace/hwzt/code/res4code_231105"
+rootname_txt2json = r"/home/xt/workplace/hwzt/code/res4code_231127"
 #语料文件夹名，该文件夹位于上述文件夹目录下
-partname_txt2json = "SplitText20230907-20231113"
+partname_txt2json = "yulu_231128"
 #结果存放文件夹，本环节中一般应与资源存放文件夹类似
-resrootname_txt2json = r"/home/xt/workplace/hwzt/code/res4code_231105"
+resrootname_txt2json = r"/home/xt/workplace/hwzt/code/res4code_231127"
 #-----------------------------------------------------------------------------------------------------------
 
 

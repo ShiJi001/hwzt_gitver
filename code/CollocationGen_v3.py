@@ -262,13 +262,13 @@ def readArticle_fromJSP(article):
         aritcal_tok_list, aritcal_pos_list, aritcal_dep_list
     ):
         #正常处理
-        # singleSentenceCollocation = singleSentenceProcess(
-        #     sentence_tok_temp, sentence_pos_temp, sentence_dep_temp
-        # )
-        #只要复合名词时
-        singleSentenceCollocation = singleSentenceProcess_only_nn(
-            sentence_tok_temp, sentence_pos_temp
+        singleSentenceCollocation = singleSentenceProcess(
+            sentence_tok_temp, sentence_pos_temp, sentence_dep_temp
         )
+        #只要复合名词时
+        # singleSentenceCollocation = singleSentenceProcess_only_nn(
+        #     sentence_tok_temp, sentence_pos_temp
+        # )
         # 将得到的dataframe数据添加到相应的文章dataframe中
         articleCollocation = pd.concat(
             [articleCollocation, singleSentenceCollocation], ignore_index=True

@@ -10,19 +10,20 @@ import json
 import re
 import CoGenConfig as myconfig
 
-#本版本的更新要点：1.修改了分句规则，分句时句子终结符不再出现。2.更换了使用的hanlp模型
+# 本版本的更新要点：1.修改了分句规则，分句时句子终结符不再出现。2.更换了使用的hanlp模型
 
- # 定义一个分隔符，用于替换缩写
-_SEPARATOR = r'@' 
+# 定义一个分隔符，用于替换缩写
+_SEPARATOR = r"@"
 # 定义一个句子识别的正则表达式，能够找到句尾符号或者行尾
-_RE_SENTENCE = re.compile(r'(\S.+?[.!?])(?=\s+|$)|(\S.+?)(?=[\n]|$)', re.UNICODE)
+_RE_SENTENCE = re.compile(r"(\S.+?[.!?])(?=\s+|$)|(\S.+?)(?=[\n]|$)", re.UNICODE)
 # 定义一个匹配缩写的正则表达式，如“Mr.”
-_AB_SENIOR = re.compile(r'([A-Z][a-z]{1,2}\.)\s(\w)', re.UNICODE)
+_AB_SENIOR = re.compile(r"([A-Z][a-z]{1,2}\.)\s(\w)", re.UNICODE)
 # 定义一个匹配连续缩写的正则表达式，如“U.S.A.”
-_AB_ACRONYM = re.compile(r'(\.[a-zA-Z]\.)\s(\w)', re.UNICODE)
+_AB_ACRONYM = re.compile(r"(\.[a-zA-Z]\.)\s(\w)", re.UNICODE)
 # 定义用于还原缩写的正则表达式
-_UNDO_AB_SENIOR = re.compile(r'([A-Z][a-z]{1,2}\.)' + _SEPARATOR + r'(\w)', re.UNICODE)
-_UNDO_AB_ACRONYM = re.compile(r'(\.[a-zA-Z]\.)' + _SEPARATOR + r'(\w)', re.UNICODE)
+_UNDO_AB_SENIOR = re.compile(r"([A-Z][a-z]{1,2}\.)" + _SEPARATOR + r"(\w)", re.UNICODE)
+_UNDO_AB_ACRONYM = re.compile(r"(\.[a-zA-Z]\.)" + _SEPARATOR + r"(\w)", re.UNICODE)
+
 
 def _replace_with_separator(text, separator, regexs):
     # 将匹配到的模式替换为分隔符
@@ -32,13 +33,14 @@ def _replace_with_separator(text, separator, regexs):
         result = regex.sub(replacement, result)
     return result
 
+
 def custom_split_sentence(text, best=True):
     # 使用正则表达式替换所有的句子终结符为换行符，包括空格
-    text = re.sub(r'([。！!？?,，:：；;]|\s)', r"\n", text)
+    text = re.sub(r"([。！!？?,，:：；;]|\s)", r"\n", text)
     # 对于六个连续句点构成的省略号，替换为换行符
-    text = re.sub(r'(\.{6})', r"\n", text)
+    text = re.sub(r"(\.{6})", r"\n", text)
     # 对于两个连续省略号字符构成的省略号，替换为换行符
-    text = re.sub(r'(…{2})', r"\n", text)
+    text = re.sub(r"(…{2})", r"\n", text)
 
     for chunk in text.split("\n"):  # 通过换行符来分割文本
         chunk = chunk.strip()
@@ -48,13 +50,17 @@ def custom_split_sentence(text, best=True):
             yield chunk
             continue
         # 处理缩写，防止它们被错误地分割
-        processed = _replace_with_separator(chunk, _SEPARATOR, [_AB_SENIOR, _AB_ACRONYM])
+        processed = _replace_with_separator(
+            chunk, _SEPARATOR, [_AB_SENIOR, _AB_ACRONYM]
+        )
         sents = list(_RE_SENTENCE.finditer(processed))  # 查找所有句子
         if not sents:  # 如果没有找到句子，则直接返回
             yield chunk
             continue
         for sentence in sents:  # 对找到的每个句子，还原缩写后返回
-            sentence = _replace_with_separator(sentence.group(), r" ", [_UNDO_AB_SENIOR, _UNDO_AB_ACRONYM])
+            sentence = _replace_with_separator(
+                sentence.group(), r" ", [_UNDO_AB_SENIOR, _UNDO_AB_ACRONYM]
+            )
             yield sentence
 
 
@@ -77,11 +83,7 @@ def readArticle_withHanLP_tok_fine(article, HanLP):
     return SSentencList
 
 
-
-
 def articleFolder_2jsonFolder(HanLP, articleFolder, jsonFolder):
-
-
     # 检查文章所在的文件夹是否存在
     if not os.path.exists(articleFolder):
         os.makedirs(articleFolder)
@@ -93,6 +95,9 @@ def articleFolder_2jsonFolder(HanLP, articleFolder, jsonFolder):
     # 获取文章文件夹中的文件列表
     file_list = os.listdir(articleFolder)
 
+    # 按照文件名字升序排序
+    file_list = sorted(file_list)
+
     for article_file in file_list:
         # 检查文件扩展名是否为.txt
         if not article_file.endswith(".txt"):
@@ -100,7 +105,6 @@ def articleFolder_2jsonFolder(HanLP, articleFolder, jsonFolder):
             continue  # 跳过当前文件，继续下一个文件
 
         file_path = os.path.join(articleFolder, article_file)
-
 
         # 读取和处理文件
         try:
@@ -126,12 +130,7 @@ def articleFolder_2jsonFolder(HanLP, articleFolder, jsonFolder):
             continue  # 跳过当前文件，继续处理下一个文件
 
 
-
-
-
-def corpus_2json(HanLP,corpus_folder,corpus_json_folder):
-
-
+def corpus_2json(HanLP, corpus_folder, corpus_json_folder):
     # 检查corpus_folder是否存在，不存在则报错
     if not os.path.exists(corpus_folder):
         raise FileNotFoundError(f"{corpus_folder} 不存在！")
@@ -151,10 +150,9 @@ def corpus_2json(HanLP,corpus_folder,corpus_json_folder):
         ]
         print(f"以下文件夹已经处理过了，本次处理会跳过：{corpus_folder_1_list_done}")
 
-    corpus_folder_1_list_error=[]
+    corpus_folder_1_list_error = []
     print(f"以下文件夹出现bug,本次处理会跳过：{corpus_folder_1_list_error}")
     corpus_folder_1_list_done.extend(corpus_folder_1_list_error)
-
 
     # 获取corpus_folder中所有的corpus_folder_1
     corpus_folder_1_list = [
@@ -165,7 +163,7 @@ def corpus_2json(HanLP,corpus_folder,corpus_json_folder):
     ]
     # 按照文件夹名字升序排序
     corpus_folder_1_list = sorted(corpus_folder_1_list)
-    
+
     with tqdm(total=len(corpus_folder_1_list), desc="总体进度", position=0) as pbar_outer:
         for folder_1 in corpus_folder_1_list:
             json_folder_1 = os.path.join(corpus_json_folder, folder_1 + "-json")
@@ -179,6 +177,8 @@ def corpus_2json(HanLP,corpus_folder,corpus_json_folder):
                 for f in os.listdir(corpus_folder_1_path)
                 if os.path.isdir(os.path.join(corpus_folder_1_path, f))
             ]
+            # 按照文件夹名字升序排序
+            corpus_folder_2_list = sorted(corpus_folder_2_list)
 
             with tqdm(
                 total=len(corpus_folder_2_list),
@@ -192,14 +192,13 @@ def corpus_2json(HanLP,corpus_folder,corpus_json_folder):
                         os.makedirs(json_folder_2)
 
                     articleFolder_2jsonFolder(
-                        HanLP, 
+                        HanLP,
                         os.path.join(corpus_folder_1_path, folder_2),
                         json_folder_2,
                     )
                     pbar_inner.update(1)  # 更新内部进度条
 
             pbar_outer.update(1)  # 更新外部进度条
-
 
 
 def main():
@@ -212,34 +211,30 @@ def main():
         hanlp.pretrained.mtl.CLOSE_TOK_POS_NER_SRL_UDEP_SDP_CON_ELECTRA_SMALL_ZH
     )
 
-
-    #资源存放根文件夹
+    # 资源存放根文件夹
     rootname = myconfig.rootname_txt2json
-    #当前处理的语料文件夹名
+    # 当前处理的语料文件夹名
     partname = myconfig.partname_txt2json
-    #结果存放文件夹
+    # 结果存放文件夹
     resrootname = myconfig.resrootname_txt2json
-    #当前处理的语料库结果json存放文件夹名
-    respartname=partname+"_json"
+    # 当前处理的语料库结果json存放文件夹名
+    respartname = partname + "_json"
 
-    #语料库存放文件夹，注意语料库内部的文件夹结构
+    # 语料库存放文件夹，注意语料库内部的文件夹结构
     yuliaoku = os.path.join(rootname, partname)
-    #生成的json文件存放文件夹
+    # 生成的json文件存放文件夹
     jieguo = os.path.join(resrootname, respartname)
-
-
 
     profiler = cProfile.Profile()
     profiler.enable()
 
-    corpus_2json(HanLP,yuliaoku,jieguo)
+    corpus_2json(HanLP, yuliaoku, jieguo)
 
     # 时间戳
     timestamp = datetime.now().strftime("%m%d%H%M")
     # 性能检测模块后置
     profiler.disable()
     profiler.dump_stats(f"performance_analysis_4_txt2json_{partname}_{timestamp}.prof")
-
 
 
 if __name__ == "__main__":
